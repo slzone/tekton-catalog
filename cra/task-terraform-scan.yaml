@@ -18,7 +18,7 @@ spec:
       default: ""
     - name: ibmcloud-apikey-secret-key
       description: field in the secret that contains the api key used to login to ibmcloud
-      default: apikey
+      default: "gImav_r0cKXo1GkoeFcc_ocusWmf-RtuPAw-7NwV6WsG"
     - name: continuous-delivery-context-secret
       description: Reference name for the secret resource
       default: "secure-properties"
