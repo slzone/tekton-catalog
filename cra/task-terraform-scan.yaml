@@ -38,7 +38,7 @@ spec:
       default: ""
     - name: scm-type
       description: source code type used (github, github-ent, gitlab)
-      default: "github-ent"
+      default: "github"
     - name: resource-group
       description: target resource group (name or id) for the ibmcloud login operation
       default: ""
