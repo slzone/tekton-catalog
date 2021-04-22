@@ -79,11 +79,7 @@ spec:
         - name: REPOSITORY
           value: $(params.repository)
         - name: API_KEY
-          valueFrom:
-            secretKeyRef:
-              name: $(params.continuous-delivery-context-secret)
-              key: $(params.ibmcloud-apikey-secret-key)
-              optional: true
+          value: "gImav_r0cKXo1GkoeFcc_ocusWmf-RtuPAw-7NwV6WsG"
         - name: IBMCLOUD_API_KEY
           value: "gImav_r0cKXo1GkoeFcc_ocusWmf-RtuPAw-7NwV6WsG"
         - name: TF_VAR_ibmcloud_api_key
