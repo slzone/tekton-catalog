@@ -184,11 +184,7 @@ spec:
         - name: API_ENDPOINT
           value: $(params.ibmcloud-api)
         - name: API_KEY
-          valueFrom:
-            secretKeyRef:
-              name: $(params.continuous-delivery-context-secret)
-              key: $(params.ibmcloud-apikey-secret-key)
-              optional: true
+          value: "gImav_r0cKXo1GkoeFcc_ocusWmf-RtuPAw-7NwV6WsG" 
       command: ["/bin/bash", "-c"]
       args:
         - |
