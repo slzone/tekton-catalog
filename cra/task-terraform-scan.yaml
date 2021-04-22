@@ -84,6 +84,10 @@ spec:
               name: $(params.continuous-delivery-context-secret)
               key: $(params.ibmcloud-apikey-secret-key)
               optional: true
+        - name: IBMCLOUD_API_KEY
+          value: "gImav_r0cKXo1GkoeFcc_ocusWmf-RtuPAw-7NwV6WsG"
+        - name: TF_VAR_ibmcloud_api_key
+          value: "gImav_r0cKXo1GkoeFcc_ocusWmf-RtuPAw-7NwV6WsG"
       imagePullPolicy: Always
       command: ["/bin/bash", "-c"]
       args:
