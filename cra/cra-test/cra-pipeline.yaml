@@ -37,7 +37,7 @@ spec:
       taskRef:
         name: clone-repo
     - name: cra-terraform-scan
-    workspaces:
+      workspaces:
     - name: artifacts
       workspace: shared-data
     - name: secrets
