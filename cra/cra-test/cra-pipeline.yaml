@@ -37,23 +37,28 @@ spec:
       taskRef:
         name: clone-repo
     - name: cra-terraform-scan
+      when:
+        - input: "$(params.tf-dir)"
+          operator: notin
+          values: [""]
+      runAfter:
+        -clone-repo
       workspaces:
     - name: artifacts
       workspace: shared-data
     - name: secrets
       workspace: pipeline-secrets
-    taskRef:
-      name: cra-terraform-scan
-    params:
-      - name: repository
-        value: $(tasks.extract-repository-url.results.extracted-value)
-      - name: branch
-        value: $(params.branch)
-      - name: tf-dir
-        value: $(params.tf-dir)
-      - name: directory-name
-        value: ""
-      - name: pipeline-debug
-        value: $(params.pipeline-debug)
-    runAfter:
-      - clone-repo
+      taskRef:
+        name: cra-terraform-scan
+      params:
+        - name: repository
+          value: $(tasks.extract-repository-url.results.extracted-value)
+        - name: branch
+          value: $(params.branch)
+        - name: tf-dir
+          value: $(params.tf-dir)
+        - name: directory-name
+          value: ""
+        - name: pipeline-debug
+          value: $(params.pipeline-debug)
+    
