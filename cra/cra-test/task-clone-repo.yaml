@@ -1,0 +1,25 @@
+---
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: clone-repo
+spec:
+  workspaces:
+  - name: artifacts 
+  steps:
+    - name: clone
+      image: ibmcom/pipeline-base-image
+      env: 
+        - name: GIT_ACCESS_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: secure-properties
+              key: git-token
+      command: ["/bin/bash", "-c"]
+      args:
+        - |
+          WS=$(workspaces.artifacts.path)
+          cd $WS
+          git --version
+          git clone --single-branch --branch tekton https://accesstoken:${GIT_ACCESS_TOKEN}@github.ibm.com/slzone/terraform-hpcs-module.git
+          chmod -R 777 $WS
