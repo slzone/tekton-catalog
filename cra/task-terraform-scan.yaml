@@ -18,7 +18,7 @@ spec:
       default: ""
     - name: ibmcloud-apikey-secret-key
       description: field in the secret that contains the api key used to login to ibmcloud
-      default: "gImav_r0cKXo1GkoeFcc_ocusWmf-RtuPAw-7NwV6WsG"
+      default: apikey
     - name: continuous-delivery-context-secret
       description: Reference name for the secret resource
       default: "secure-properties"
@@ -38,7 +38,7 @@ spec:
       default: ""
     - name: scm-type
       description: source code type used (github, github-ent, gitlab)
-      default: "github"
+      default: "github-ent"
     - name: resource-group
       description: target resource group (name or id) for the ibmcloud login operation
       default: ""
@@ -79,11 +79,11 @@ spec:
         - name: REPOSITORY
           value: $(params.repository)
         - name: API_KEY
-          value: "gImav_r0cKXo1GkoeFcc_ocusWmf-RtuPAw-7NwV6WsG"
-        - name: IBMCLOUD_API_KEY
-          value: "gImav_r0cKXo1GkoeFcc_ocusWmf-RtuPAw-7NwV6WsG"
-        - name: TF_VAR_ibmcloud_api_key
-          value: "gImav_r0cKXo1GkoeFcc_ocusWmf-RtuPAw-7NwV6WsG"
+          valueFrom:
+            secretKeyRef:
+              name: $(params.continuous-delivery-context-secret)
+              key: $(params.ibmcloud-apikey-secret-key)
+              optional: true
       imagePullPolicy: Always
       command: ["/bin/bash", "-c"]
       args:
@@ -184,7 +184,11 @@ spec:
         - name: API_ENDPOINT
           value: $(params.ibmcloud-api)
         - name: API_KEY
-          value: "gImav_r0cKXo1GkoeFcc_ocusWmf-RtuPAw-7NwV6WsG" 
+          valueFrom:
+            secretKeyRef:
+              name: $(params.continuous-delivery-context-secret)
+              key: $(params.ibmcloud-apikey-secret-key)
+              optional: true
       command: ["/bin/bash", "-c"]
       args:
         - |
