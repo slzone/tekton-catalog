@@ -46,7 +46,7 @@ spec:
       spec:
         serviceAccountName: build-bot
         pipelineRef:
-          name: accelerate
+          name: ci-pipeline
         workspaces:
           - name: shared-data
             persistentVolumeClaim:
