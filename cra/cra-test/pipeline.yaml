@@ -19,7 +19,7 @@ spec:
       default: ""
     - name: scm-type
       description: source code type used 
-      default: "" 
+      default: "github"
     - name: tf-dir
       description: the directory where the terraform main entry file is found
       default: ""
