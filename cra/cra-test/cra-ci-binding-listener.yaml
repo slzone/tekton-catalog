@@ -14,6 +14,14 @@ apiVersion: tekton.dev/v1beta1
 kind: TriggerBinding
 metadata:
   name: github-cra-ci-binding
+spec:
+  params:
+    - name: branch
+      value: $(event.ref)
+    - name: repository
+      value: $(event.repository.html_url)
+    - name: scm-type
+      value: "github"  
 
 ---
 apiVersion: tekton.dev/v1beta1
