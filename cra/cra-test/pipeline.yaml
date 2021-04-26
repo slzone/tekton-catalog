@@ -159,14 +159,14 @@ spec:
   - name: shared-data
   - name: pipeline-secrets
   tasks:
-  - name: extract-repository-url
-      taskRef:
-        name: toolchain-extract-value
-      params:
-        - name: expression
-          value: '. as $toolchain | ["$(params.repository)"] | if .[0]=="" then $toolchain | .services[] | select(.toolchain_binding.name=="repo") | .dashboard_url else .[0] end'
-        - name: pipeline-debug
-          value: $(params.pipeline-debug)
+#   - name: extract-repository-url
+#       taskRef:
+#         name: toolchain-extract-value
+#       params:
+#         - name: expression
+#           value: '. as $toolchain | ["$(params.repository)"] | if .[0]=="" then $toolchain | .services[] | select(.toolchain_binding.name=="repo") | .dashboard_url else .[0] end'
+#         - name: pipeline-debug
+#           value: $(params.pipeline-debug)
   - name: clone-patterns-repo
     workspaces:
     - name: artifacts
@@ -183,7 +183,8 @@ spec:
       name: cra-terraform-scan
     params:
       - name: repository
-        value: $(tasks.extract-repository-url.results.extracted-value)
+        description: the git repo containing source code. If empty, the repository url will be found from toolchain
+        default: ""
       - name: branch
         value: testslz
       - name: tf-dir
