@@ -1,5 +1,61 @@
 ---
 apiVersion: tekton.dev/v1beta1
+kind: EventListener
+metadata:
+  name: workspace
+spec:
+  triggers:
+    - binding:
+        name: simple-binding
+      template:
+        name: trigger-workspace
+---
+apiVersion: tekton.dev/v1beta1
+kind: TriggerBinding
+metadata:
+  name: simple-binding
+---
+apiVersion: tekton.dev/v1beta1
+kind: TriggerTemplate
+metadata:
+  name: trigger-workspace
+spec:
+  resourcetemplates:
+    - # PVC
+      apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: tekton-catalog-$(uid)-pvc
+      spec:
+        resources:
+          requests:
+            storage:  1Gi
+        volumeMode: Filesystem
+        accessModes:
+          - ReadWriteOnce
+    - # Service Account
+      apiVersion: v1
+      kind: ServiceAccount
+      metadata:
+        name: build-bot
+    - # Pipeline run
+      apiVersion: tekton.dev/v1beta1
+      kind: PipelineRun
+      metadata:
+        name: tekton-catalog-$(uid)
+      spec:
+        serviceAccountName: build-bot
+        pipelineRef:
+          name: accelerate
+        workspaces:
+          - name: shared-data
+            persistentVolumeClaim:
+              claimName: tekton-catalog-$(uid)-pvc
+          - name: pipeline-secrets
+            secret:
+              secretName: secure-properties
+---
+apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
   name: ci-pipeline
@@ -96,4 +152,53 @@ spec:
         - name: policy-config-json
           value: $(params.policy-config-json)
         - name: tf-var-file
-          value: $(params.tf-var-file)      
+          value: $(params.tf-var-file)     
+
+
+# ---
+# apiVersion: tekton.dev/v1beta1
+# kind: Pipeline
+# metadata:
+#   name: accelerate
+# spec:
+#   workspaces:
+#   - name: shared-data
+#   - name: pipeline-secrets
+#   tasks:
+#   - name: extract-repository-url
+#       taskRef:
+#         name: toolchain-extract-value
+#       params:
+#         - name: expression
+#           value: '. as $toolchain | ["$(params.repository)"] | if .[0]=="" then $toolchain | .services[] | select(.toolchain_binding.name=="repo") | .dashboard_url else .[0] end'
+#         - name: pipeline-debug
+#           value: $(params.pipeline-debug)
+#   - name: clone-patterns-repo
+#     workspaces:
+#     - name: artifacts
+#       workspace: shared-data
+#     taskRef:
+#       name: clone-patterns-repo
+#   - name: cra-terraform-scan
+#     workspaces:
+#     - name: artifacts
+#       workspace: shared-data
+#     - name: secrets
+#       workspace: pipeline-secrets
+#     taskRef:
+#       name: cra-terraform-scan
+#     params:
+#       - name: repository
+#         value: $(tasks.extract-repository-url.results.extracted-value)
+#       - name: branch
+#         value: testslz
+#       - name: tf-dir
+#         value: terraform/templates/pattern-vpc-roks/
+#       - name: directory-name
+#         value: accelerate
+#       - name: pipeline-debug
+#         value: "1"
+#     runAfter:
+#     - clone-patterns-repo
+      
+     
