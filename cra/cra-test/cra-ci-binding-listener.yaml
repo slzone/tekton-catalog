@@ -15,4 +15,21 @@ kind: TriggerBinding
 metadata:
   name: github-cra-ci-binding
 
-
+---
+apiVersion: tekton.dev/v1beta1
+kind: TriggerBinding
+metadata:
+  name: trigger-binding-manual
+spec:
+  params:
+---
+apiVersion: tekton.dev/v1beta1
+kind: EventListener
+metadata:
+  name: manual-run
+spec:
+  triggers:
+    - binding:
+        name: trigger-binding-manual
+      template:
+        name: ci-template
