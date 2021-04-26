@@ -68,17 +68,11 @@ spec:
     - name: revision
       description: the git revision/commit for the git repo
       default: ""
-    - name: commit-id
-      description: commit id
-    - name: commit-timestamp
-      description: commit timestamp
     - name: pipeline-debug
       description: toggles debug mode for the pipeline
     - name: project-id
       description: project id
       default: ""
-    - name: scm-type
-      description: source code type used (github, github-ent, gitlab)
     - name: tf-dir
       description: the directory where the terraform main entry file is found
       default: ""
