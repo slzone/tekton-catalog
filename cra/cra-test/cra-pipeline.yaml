@@ -17,12 +17,12 @@ spec:
     taskRef:
       name: clone-repo 
   - name: cra-terraform-scan
-      when:
-        - input: "$(params.tf-dir)"
-          operator: notin
-          values: [""]
-      runAfter:
-        -clone-repo
+    when:
+      - input: "$(params.tf-dir)"
+        operator: notin
+        values: [""]
+    runAfter:
+      -clone-repo
       workspaces:
     - name: artifacts
       workspace: shared-data
