@@ -47,6 +47,10 @@ spec:
       spec:
         pipelineRef:
           name: cra-pipeline
+        workspaces:
+          - name: artifacts
+            persistentVolumeClaim:
+              claimName: tekton-catalog-$(uid)-pvc
         params:
           - name: repository
             value: $(params.repository)
@@ -60,12 +64,6 @@ spec:
           - name: scm-type
             description: source code type used (github, github-ent)
             default: "github"
-          - name: apikey
-            value: $(params.apikey)
-        workspaces:
-          - name: artifacts
-            persistentVolumeClaim:
-              claimName: tekton-catalog-$(uid)-pvc
 ---
 apiVersion: tekton.dev/v1beta1
 kind: TriggerBinding
