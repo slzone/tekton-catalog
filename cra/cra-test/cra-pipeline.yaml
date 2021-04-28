@@ -30,7 +30,7 @@ spec:
       name: cra-terraform-scan
     params:
       - name: repository
-          value: https://github.com/slzone/terraform-hpcs-module
+          value:$(params.repository)
         - name: branch
           value: $(params.branch)
         - name: tf-dir
@@ -40,7 +40,7 @@ spec:
         - name: pipeline-debug
           value: $(params.pipeline-debug)
     runAfter:
-    - clone-patterns-repo
+    - clone-repo
  
     
   
