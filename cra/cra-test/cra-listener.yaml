@@ -4,7 +4,6 @@ kind: TriggerTemplate
 metadata:
   name: cra-template
 spec:
-  spec:
   params:
     - name: repository
       description: The Git Repository for the Application Source Code. If empty, the Repository url will be found from toolchain
