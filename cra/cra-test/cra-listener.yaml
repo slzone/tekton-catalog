@@ -55,6 +55,12 @@ spec:
             value: $(params.branch)
           - name: revision
             value: $(params.revision)
+          - name: pipeline-debug
+            description: toggles debug mode for the pipeline
+            default: "1"
+          - name: scm-type
+            description: source code type used (github, github-ent)
+            default: "github"
           - name: apikey
             value: $(params.apikey)
         workspaces:
