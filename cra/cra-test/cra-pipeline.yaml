@@ -10,13 +10,13 @@ spec:
   - name: artifacts
 
   tasks:
-    - name: clone-repo
+  - name: clone-repo
     workspaces:
     - name: artifacts
       workspace: shared-data
     taskRef:
-      name: clone-repo
-    - name: cra-terraform-scan
+      name: clone-repo 
+  - name: cra-terraform-scan
       when:
         - input: "$(params.tf-dir)"
           operator: notin
@@ -42,3 +42,4 @@ spec:
         - name: pipeline-debug
           value: $(params.pipeline-debug)
     
+  
