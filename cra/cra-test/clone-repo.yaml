@@ -10,16 +10,13 @@
      - name: clone
        image: ibmcom/pipeline-base-image
        env: 
-         - name: GIT_ACCESS_TOKEN
-           valueFrom:
-             secretKeyRef:
-               name: secure-properties
-               key: git-token
-       command: ["/bin/bash", "-c"]
+         - name: REPOSITORY
+           value: $(params.repository)
+         - name: REVISION
+           value: $(params.revision)
+       command: ["/bin/sh", "-c"]
        args:
-         - |
-           WS=$(workspaces.artifacts.path)
-           cd $WS
-           git --version
-           git clone --single-branch --branch tekton https://accesstoken:${GIT_ACCESS_TOKEN}@github.ibm.com/slzone/terraform-hpcs-module.git
-           chmod -R 777 $WS
+         - set -e -o pipefail;
+           echo "Cloning $REPOSITORY";
+           cd /workspace && git clone -q -b $REVISION $REPOSITORY .;
+         
