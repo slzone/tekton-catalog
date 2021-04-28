@@ -10,32 +10,12 @@ spec:
   - name: artifacts
 
   tasks:
-    - name: extract-repository-url
-      taskRef:
-        name: toolchain-extract-value
-      params:
-        - name: expression
-          value: '. as $toolchain | ["$(params.repository)"] | if .[0]=="" then $toolchain | .services[] | select(.toolchain_binding.name=="repo") | .dashboard_url else .[0] end'
-        - name: pipeline-debug
-          value: $(params.pipeline-debug)
     - name: clone-repo
-      taskRef:
-        name: clone-repo
-      params:
-        - name: repository
-          value: $(tasks.extract-repository-url.results.extracted-value)
-        - name: branch
-          value: $(params.branch)
-        - name: revision
-          value: $(params.revision)
-        - name: pipeline-debug
-          value: $(params.pipeline-debug)  
-      workspaces:
-        - name: output
-          workspace: artifacts
+    workspaces:
     - name: artifacts
-      taskRef:
-        name: clone-repo
+      workspace: shared-data
+    taskRef:
+      name: clone-repo
     - name: cra-terraform-scan
       when:
         - input: "$(params.tf-dir)"
