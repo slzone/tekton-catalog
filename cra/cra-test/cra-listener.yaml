@@ -47,7 +47,7 @@ spec:
         name: tekton-catalog-$(uid)
       spec:
         pipelineRef:
-          name: ci-pipeline
+          name: cra-pipeline
         params:
           - name: repository
             value: $(params.repository)
