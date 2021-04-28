@@ -32,7 +32,7 @@ spec:
         name: cra-terraform-scan
       params:
         - name: repository
-          value: $(tasks.extract-repository-url.results.extracted-value)
+          value: https://github.com/slzone/terraform-hpcs-module
         - name: branch
           value: $(params.branch)
         - name: tf-dir
