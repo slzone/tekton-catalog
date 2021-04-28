@@ -28,7 +28,7 @@ spec:
         value: $(params.pipeline-debug)
     workspaces:
       - name: output
-        workspace: pipeline-ws
+        workspace: artifacts
   - name: cra-terraform-scan
     when:
       - input: "$(params.tf-dir)"
