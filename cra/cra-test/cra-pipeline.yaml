@@ -32,17 +32,17 @@ spec:
       name: cra-terraform-scan
     params:
       - name: repository
-          value: $(params.repository)
+        value: $(params.repository)
       - name: branch
-          value: $(params.branch)
+        value: $(params.branch)
       - name: tf-dir
-          value: $(params.tf-dir)
+        value: $(params.tf-dir)
       - name: revision
-          value: $(params.revision)
+        value: $(params.revision)
       - name: directory-name
-          value: ""
+        value: ""
       - name: pipeline-debug
-          value: $(params.pipeline-debug)
+        value: $(params.pipeline-debug)
     
  
     
