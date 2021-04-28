@@ -35,6 +35,8 @@ spec:
           value: $(params.branch)
       - name: tf-dir
           value: $(params.tf-dir)
+      - name: revision
+          value: $(params.revision)
       - name: directory-name
           value: ""
       - name: pipeline-debug
