@@ -20,6 +20,8 @@ spec:
       default: ""
     - name: apikey
       description: The IBM Cloud API Key
+    - name: pipeline-debug
+      default: ""
   resourcetemplates:
     - apiVersion: v1
       kind: PersistentVolumeClaim
